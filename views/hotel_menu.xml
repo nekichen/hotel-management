@@ -1,0 +1,113 @@
+<odoo>
+    <!-- Root menu -->
+    <menuitem id="menu_hotel_management_root"
+        name="Hotel Management"
+        sequence="100" />
+
+    <!-- Reporting Menu (Dropdown) -->
+    <menuitem id="menu_hotel_management_reporting"
+        name="Reporting"
+        parent="menu_hotel_management_root"
+        sequence="107" />
+
+    <!-- Configuration Menu (Dropdown) -->
+    <menuitem id="menu_hotel_management_configuration"
+        name="Configuration"
+        parent="menu_hotel_management_root"
+        sequence="110" />
+
+    <!-- Action for Reservations -->
+    <record id="action_hotel_reservations" model="ir.actions.act_window">
+        <field name="name">Book Room</field>
+        <field name="res_model">hotel.reservation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first reservation
+            </p>
+        </field>
+    </record>
+
+    <!-- Reservation Menu -->
+    <menuitem id="menu_hotel_management_reservation"
+        name="Reservation"
+        parent="menu_hotel_management_root"
+        action="action_hotel_reservations"
+        sequence="105" />
+
+    <!-- Action for Floors -->
+    <record id="action_hotel_floors" model="ir.actions.act_window">
+        <field name="name">Floors</field>
+        <field name="res_model">hotel.floors</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first floor
+            </p>
+        </field>
+    </record>
+
+    <!-- Floors Configuration Menu Item -->
+    <menuitem id="menu_hotel_floors"
+        name="Floors"
+        parent="menu_hotel_management_configuration"
+        sequence="115"
+        action="action_hotel_floors" />
+
+    <!-- Action for Amenities -->
+    <record id="action_hotel_amenities" model="ir.actions.act_window">
+        <field name="name">Amenity</field>
+        <field name="res_model">hotel.amenity</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first amenity
+            </p>
+        </field>
+    </record>
+
+    <!-- Amenities Configuration Menu Item -->
+    <menuitem id="menu_hotel_amenities"
+        name="Amenity"
+        parent="menu_hotel_management_configuration"
+        sequence="120"
+        action="action_hotel_amenities" />
+
+    <!-- Action for Rooms -->
+    <record id="action_hotel_rooms" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">hotel.rooms</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first room
+            </p>
+        </field>
+    </record>
+
+    <!-- Rooms Configuration Menu Item -->
+    <menuitem id="menu_hotel_rooms"
+        name="Rooms"
+        parent="menu_hotel_management_configuration"
+        sequence="125"
+        action="action_hotel_rooms" />
+
+    <!-- Action for Services -->
+    <record id="action_hotel_services" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">hotel.services</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create the first service
+            </p>
+        </field>
+    </record>
+
+    <!-- Services Configuration Menu Item -->
+    <menuitem id="menu_hotel_services"
+        name="Services"
+        parent="menu_hotel_management_configuration"
+        sequence="130"
+        action="action_hotel_services" />
+</odoo>

@@ -1,0 +1,84 @@
+<odoo>
+    <!-- View untuk Wizard -->
+    <record id="view_hotel_report_wizard_form" model="ir.ui.view">
+        <field name="name">hotel.report.form</field>
+        <field name="model">hotel.report</field>
+        <field name="arch" type="xml">
+            <form string="Generate Report">
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="room" />
+                </group>
+                <footer>
+                    <button string="Export to PDF" type="object" name="action_generate_report"
+                        class="btn-primary" icon="fa-file-pdf-o" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action untuk Wizard -->
+    <record id="action_hotel_report" model="ir.actions.act_window">
+        <field name="name">Generate Hotel Report</field>
+        <field name="res_model">hotel.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_hotel_report_wizard_form" />
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu Item untuk Wizard -->
+    <menuitem id="menu_hotel_reservations_report"
+        name="Reservation Report"
+        parent="menu_hotel_management_reporting"
+        sequence="135"
+        action="action_hotel_report" />
+
+    <!-- Template untuk Laporan PDF -->
+    <template id="report_hotel_booking_template">
+        <t t-call="web.html_container">
+            <div class="page" style="font-family: Arial, sans-serif;">
+                <h2 style="font-family: Arial, sans-serif;">Room Booking Report</h2>
+                <table class="table table-sm table-hover" style="font-family: Arial, sans-serif;">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Guest Name</th>
+                            <th>Room No.</th>
+                            <th>Check-In</th>
+                            <th>Check-Out</th>
+                            <th>Reference No.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="sl_no" t-value="0" />
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-foreach="doc.room_ids" t-as="room">
+                                <t t-set="sl_no" t-value="sl_no + 1" />
+                                <tr>
+                                    <td><span t-esc="sl_no" /></td>
+                                    <td><span t-esc="room.reservation_id.customer.name" /></td>
+                                    <td><span t-esc="room.room_id.name" /></td>
+                                    <td><span t-esc="room.reservation_id.checkin_date" /></td>
+                                    <td><span t-esc="room.reservation_id.checkout_date" /></td>
+                                    <td><span t-esc="room.reservation_id.reservation_code" /></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    
+    <!-- Report Declaration -->
+    <record id="action_hotel_report_pdf" model="ir.actions.report">
+        <field name="name">Hotel Booking Report</field>
+        <field name="model">hotel.reservation</field>
+        <field name="report_name">hotel_management.report_hotel_booking_template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">hotel_management.report_hotel_booking_template</field>
+        <field name="binding_model_id" ref="model_hotel_reservation"/>
+    </record>           
+</odoo>

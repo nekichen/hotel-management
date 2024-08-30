@@ -1,0 +1,79 @@
+<odoo>
+    <record id="view_hotel_reservation_form" model="ir.ui.view">
+        <field name="name">hotel.reservation.form</field>
+        <field name="model">hotel.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Reservation Form">
+                <header>
+                    <!-- Always visible buttons, their behavior controlled by server-side logic -->
+                    <button name="action_confirm" string="Confirm" class="btn-primary" type="object"/>
+                    <button name="action_checkin" string="Check In" class="btn-primary" type="object"/>
+                    <button name="action_checkout" string="Check Out" class="btn-primary" type="object"/>
+                    <button name="action_cancel" string="Cancel" class="btn-secondary" type="object"/>
+                    <field name="reservation_status" widget="statusbar" statusbar-visible="draft,confirmed,checkedin,checkedout,cancelled"/>
+                </header>
+                <sheet>
+                    <!-- Reservation Code -->
+                    <div class="oe_title">
+                        <label for="reservation_code" class="o_form_label">
+                            Reservation Code
+                        </label>
+                        <field name="reservation_code" style="font-size: 24px; font-weight: bold;" readonly="1"/>
+                    </div>
+
+                    <!-- Reservation Details -->
+                    <group>
+                        <group>
+                            <field name="customer" options="{'no_open': True}" placeholder="Select Customer"/>
+                            <field name="reservation_date" />
+                        </group>
+                        <group>
+                            <field name="checkin_date" />
+                            <field name="checkout_date" />
+                            <field name="total_days" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- Tabs for Additional Information -->
+                    <notebook>
+                        <page string="Rooms">
+                            <field name="room_ids">
+                                <tree editable="bottom">
+                                    <field name="room_id" string="Room"/>
+                                    <field name="rent" string="Rent"/>
+                                </tree>
+                            </field>
+                        </page>
+                        
+                        <page string="Notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+
+                    <!-- Footer Section -->
+                    <div class="oe_footer">
+                        <div class="o_form_label">
+                            <label for="subtotal">
+                                Total Payment
+                            </label>
+                            <field name="subtotal" style="font-size: 18px; font-weight: bold;" readonly="1"/>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hotel_reservation_tree" model="ir.ui.view">
+        <field name="name">hotel.reservation.tree</field>
+        <field name="model">hotel.reservation</field>
+        <field name="arch" type="xml">
+            <tree string="Hotel Reservations">
+                <field name="reservation_code"/>
+                <field name="reservation_date"/>
+                <field name="customer"/>
+                <field name="reservation_status"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
